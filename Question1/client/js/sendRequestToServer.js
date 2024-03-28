@@ -12,14 +12,23 @@ function init() {
 async function sendRequest() {
     // On récupère la valeur du prompt
     const inputElement = document.querySelector('input');
+    const imputTemp = document.getElementById("temperature");
+    const imputMaxTokens = document.getElementById("max_tokens");
+    
 
     const prompt = inputElement.value;
+    const temperature = imputTemp.value;
+    const max_tokens = imputMaxTokens.value;
     // si le prompt est vide on quitte la fonction
     if (prompt === '') return;
+    if (temperature === '') return;
+    if (max_tokens === '') return;
 
     // On envoie le contenu du prompt dans un FormData (eq. formulaires multipart)
     const promptData = new FormData();
     promptData.append('prompt', prompt);
+    promptData.append('temperature', temperature);
+    promptData.append('max_tokens', max_tokens);
 
     // Envoi de la requête POST par fetch, avec le FormData dans la propriété body
     // côté serveur on récupèrera dans req.body.prompt la valeur du prompt,

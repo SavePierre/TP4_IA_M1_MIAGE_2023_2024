@@ -30,7 +30,11 @@ const upload = multer();
 app.post('/chat', upload.none(), async (req, res) => {
     // get prompt from the form data
     const prompt = req.body.prompt;
+    const temperature = parseFloat(req.body.temperature);
+    const max_tokens = parseInt(req.body.max_tokens);
     console.log("PROMPT: ", prompt);
+    console.log("temperature: ", temperature);
+    console.log("max_tokens: ", max_tokens);
     
     // send the prompt to the OpenAI API
     const response = await openai.chat.completions.create({
@@ -41,8 +45,8 @@ app.post('/chat', upload.none(), async (req, res) => {
             "content": prompt
           }
         ],
-        temperature: 1,
-        max_tokens: 7,
+        temperature: temperature,
+        max_tokens: max_tokens,
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
